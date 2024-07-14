@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock title %}
+
+{% block content %}
+
+    <section class="bg-section1">
+        <div class="container mx-auto">
+            <div class="content-section1">
+                <h1 class="font-semibold">Ноутбуки нового поколения с доставкой</h1>
+                <span class="font-semibold">от ведущих производителей</span>
+                <p>Скидка на игровые ноутбуки - 50% до конца декабря - успейте заказать выгодно!</p>
+            </div>
+            <a class="a-discount">Получить промокод на скидку</a>
+        </div>
+    </section>
+
+    <section class="filter">
+        <div class="container">
+            <h1 class="text-3xl font-semibold mr-20 pb-8 pt-16">Каталог ноутбуков</h1>
+            <div class="lg:flex md:flex sm:block justify-between gap-16">
+                <div class="ff">
+                    <div class="dd w sm:w-full">
+                        <div class="category sm:w-full ten">{% include 'components/nav_categories.html' %}</div>
+                        <div class="ten filter_css ff mt-10">
+                            {% include 'components/workspace/news_filter.html' %}
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 rowblocks">
+                    {% for product in news %}
+                        <div class="ten max-w-sm h-full relative rounded flex flex-col">
+                            <div style="width: 100%; padding-top: 80%; position: relative;">
+                                <div class="slider-container" data-product-id="{{ product.id }}">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt=""
+                                             class="w-full h-full absolute top-0 left-0 object-cover transition duration-300 transform group-hover:scale-110 ">
+                                    {% else %}
+                                        {% for image in product.images.all %}
+                                            <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="px-6 py-2 flex-grow bg-white">
+                                <h5 class="font-bold text-center text-xl mb-2">{{ product.title }}</h5>
+                                <h6 class="text-gray-700 mb-2">{{ product.category.name }}</h6>
+                                <p class="text-gray-700 text-base">Цена:{{ product.price }}</p>
+                                <div class="mt-2">
+                                    {% for tag in product.tags.all %}
+                                        <span class="inline-block text-sm font-semibold text-blue-700 mr-2">#{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="podrobnee bg-white px-6 mb-2 text-center">
+                                <a href="{% url 'detail_news' pk=product.id %}"
+                                   class="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-full">Подробнее</a>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <h4>Таких ноутбуков нету</h4>
+                    {% endfor %}
+                </div>
+            </div>
+            {% include 'components/news_pagination.html' %}
+        </div>
+    </section>
+
+    <style>
+
+        .bg-section1 {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/background.jpeg");
+            background-size: cover;
+            background-position: center;
+            height: 905px;
+            max-width: 10000px;
+            width: 100%;
+        }
+
+        .content-section1 {
+            max-width: 900px;
+            width: 100%;
+            color: white;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            padding-top: 200px;
+        }
+
+        .content-section1 > h1 {
+            font-size: 60px;
+            line-height: 1.2;
+        }
+
+        .content-section1 > span {
+            font-size: 40px;
+        }
+
+        .content-section1 > p {
+            font-size: 22px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .a-discount {
+            color: white;
+            font-size: 25px;
+            border: 2px solid transparent;
+            padding: 5px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            background-color: #F79F00;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .a-discount:hover {
+            background-color: #FFC100;
+            border-color: #FFC100;
+            transform: scale(1.05);
+        }
+
+        .a-discount:focus {
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .a-discount:active {
+            transform: scale(0.98);
+        }
+
+        .filter {
+            background-color: #F9F9F9;
+        }
+
+        .category {
+            width: 100%;
+            line-height: 2.5;
+            background-color: white;
+            height: 170px;
+            padding: 10px 20px;
+        }
+
+        .filter_css {
+            width: 100%;
+            background-color: white;
+            padding: 10px 20px;
+        }
+
+
+        .dd {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ten:hover {
+            box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .podrobnee {
+            padding-bottom: 20px;
+            padding-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .rowblocks {
+                place-items: center;
+            }
+
+            .lg\:flex > * {
+                margin-bottom: 30px;
+            }
+
+            .rowblocks > div {
+                width: 100%;
+            }
+
+            .rowblocks > div > div {
+                margin: 0 auto;
+                width: 100%;
+            }
+            
+            .w{
+                margin: 0 auto;
+                width: 390px;
+            }
+        }
+
+
+        @media (max-width: 1050px) {
+            .content-section1 {
+                max-width: 700px;
+                width: 100%;
+                color: white;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                padding-top: 300px;
+            }
+
+            .content-section1 > h1 {
+                font-size: 40px;
+                line-height: 1.2;
+            }
+
+            .content-section1 > span {
+                font-size: 20px;
+            }
+
+            .content-section1 > p {
+                font-size: 17px;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .a-discount {
+                color: white;
+                font-size: 20px;
+                border: 2px solid transparent;
+                padding: 5px 25px;
+                border-radius: 6px;
+                cursor: pointer;
+                text-align: left;
+                background-color: #F79F00;
+                outline: none;
+                transition: all 0.3s ease;
+            }
+            
+        }
+
+    </style>
+
+{% endblock content %}

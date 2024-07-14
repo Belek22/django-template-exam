@@ -1,0 +1,25 @@
+<div class="py-3 px-3 contwidth">
+    <h2 class="mb-3">Фильтр:</h2>
+    <div>
+        <form method="get">
+            {{ filter.form.as_p }}
+            <input type="hidden" name="offset" value="{{ request.GET.offset }}">
+            <div class="flex justify-between mt-4 bg-blue-700 hover:bg-blue-800 px-3 py-2 text-white rounded">
+                <button class="w-full" type="submit">Фильтр</button>
+            </div>
+        </form>
+    </div>
+</div>
+</aside>
+
+<style>
+
+    @media (max-width: 768px) {
+        .contwidth {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    }
+</style>

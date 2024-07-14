@@ -1,0 +1,161 @@
+{% extends 'workspace/base.html' %}
+{% load static %}
+
+{% block title %}| Регистрация{% endblock title %}
+{% block content %}
+    <div class="flex justify-center items-center min-h-screen">
+
+        <div class="card-body rounded-lg">
+            <div class="flex items-center justify-center mb-5">
+                <h2 class="h2 text-3xl font-semibold mb-6">Регистрация</h2>
+            </div>
+            <form action="{% url 'register' %}" id="register_form" method="POST" novalidate>
+                {% csrf_token %}
+                <div class="mb-4">
+                    {{ form.first_name.errors }}
+                    <label for="id_first_name" class="block font-medium text-gray-700">Имя</label>
+                    <input type="text" id="id_first_name" name="first_name" class="input" placeholder="Введите имя...">
+                </div>
+
+                <div class="mb-4">
+                    {{ form.last_name.errors }}
+                    <label for="id_last_name" class="block font-medium text-gray-700">Фамилия</label>
+                    <input type="text" id="id_last_name" name="last_name" class="input"
+                           placeholder="Введите фамилию...">
+                </div>
+
+                <div class="mb-4">
+                    {{ form.username.errors }}
+                    <label for="id_last_name" class="block font-medium text-gray-700">Имя пользователя</label>
+                    <input type="text" id="id_username" name="username" class="input"
+                           placeholder="Введите имя пользователя...">
+                </div>
+
+                <div class="mb-4">
+                    {{ form.email.errors }}
+                    <label for="id_email" class="block font-medium text-gray-700">Почта</label>
+                    <input type="email" id="id_email" name="email" class="input" placeholder="Введите почту...">
+                </div>
+
+                <div class="mb-4">
+                    {{ form.password1.errors }}
+                    <label for="id_password1" class="block font-medium text-gray-700">Пароль</label>
+                    <input type="password" id="id_password1" name="password1" class="input"
+                           placeholder="Введите пароль...">
+                </div>
+                <div class="mb-4">
+                    {{ form.password1.errors }}
+                    <label for="id_password2" class="block font-medium text-gray-700">Подтвердите пароль</label>
+                    <input type="password" id="id_password2" name="password2" class="input"
+                           placeholder="Подтвердите пароль...">
+                </div>
+                <button type="submit" class="btn-login rounded-lg w-full">Регистрация</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+
+        #register_form ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: red;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url("/media/регистр.jpeg");
+            background-size: cover;
+            max-width: 2000px;
+            width: 100%;
+        }
+
+        .card-body {
+            background-color: white;
+            padding: 1.8rem;
+            max-width: 450px;
+            width: 100%;
+            margin: 30px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        label {
+            font-size: 18px;
+            margin-left: 6px;
+        }
+
+        input:hover {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .btn-login {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 800px) {
+            .card-body {
+                background-color: white;
+                padding: 1.7rem;
+                max-width: 400px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .card-body {
+                background-color: white;
+                padding: 1.7rem;
+                max-width: 380px;
+                width: 100%;
+            }
+
+            .h2 {
+                font-size: 25px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            .btn-login {
+                padding: 10px 12px;
+                font-size: 1rem;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn-login:hover {
+                background-color: #45a049;
+            }
+        }
+    </style>
+
+{% endblock content %}

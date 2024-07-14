@@ -1,0 +1,201 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Изменение ноутбука {% endblock title %}
+{% load static %}
+{% block content %}
+
+    <section class="card-create rounded-lg">
+        <form action="{% url 'update_news' news.id %}" method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+                <h2 class="h2 mb-10 mt-4 text-black text-center text-2xl font-bold">Изменение ноутбука</h2>
+                <div class="flex2 flex justify-between gap-10">
+                    <div class="mb-2 price-inpt w-full">
+                        <label for="id_title">{{ form.title.label }}</label>
+                        {{ form.title }}
+                        {% for error in form.title.errors %}
+                            <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-2 price-inpt w-full">
+                        <label for="id_price">{{ form.price.label }}</label>
+                        {{ form.price }}
+                        {% for error in form.price.errors %}
+                            <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="flex2 flex justify-between items-center mt-5 gap-10">
+                    <div class="img mt-2 relative rounded-md shadow-sm price-inpt price-inpt2">
+                        <input id="id_image" name="image" type="file" class="form-control hidden">
+                        <label for="id_image" class="">
+                            <div class="mb-2 border-dashed border-2 border-slate-800 flex flex-col justify-center items-center cursor-pointer">
+                                <img src="{% static 'admin/download_image.svg' %}" alt="" class="w-24 h-48">
+                            </div>
+                            <span class="cursor-pointer py-2 px-4 block bg-black text-center bg-slate-800 text-white rounded-md hover:bg-slate-900 focus:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                 Выбрать файл
+                                </span>
+                        </label>
+                        {% for error in form.image.errors %}
+                            <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-2">
+                        <label for="id_content">{{ form.content.label }}</label>
+                        {{ form.content }}
+                        {% for error in form.content.errors %}
+                            <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="mb-2">
+                    {{ form.category }}
+                    {% for error in form.category.errors %}
+                        <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="mb-2">
+                    <label for="id_tags" class="mr-2">{{ form.tags.label }}</label>
+                    {{ form.tags }}
+                    {% for error in form.tags.errors %}
+                        <div class="mt-1 mb-2 text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn-login rounded-lg w-full">Сохранить</button>
+        </form>
+    </section>
+
+    <style>
+        body {
+            background-image: url("/media/создать.jpeg");
+            background-size: cover;
+            background-position: center;
+            max-width: 2000px;
+            width: 100%;
+        }
+
+        .card-create {
+            background-color: white;
+            padding: 25px 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 5px 8px;
+        }
+
+        input:hover {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .price-inpt {
+            width: 350px;
+        }
+
+        .price-inpt2 {
+            width: 440px;
+        }
+
+        .btn-login {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #45a049;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 1050px) {
+            .card-create {
+                padding: 25px 30px;
+                margin: 40px auto;
+                max-width: 700px;
+                width: 100%;
+            }
+
+            .btn-login {
+                padding: 8px 13px;
+                font-size: 1.1rem;
+                transition: background-color 0.3s ease;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            .card-create {
+                padding: 25px 30px;
+                margin: 40px auto;
+                max-width: 600px;
+                width: 100%;
+            }
+
+            .btn-login {
+                padding: 10px 10px;
+                font-size: 1.0rem;
+                transition: background-color 0.3s ease;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .card-create {
+                padding: 25px 30px;
+                margin: 40px auto;
+                max-width: 500px;
+                width: 100%;
+            }
+            
+            .flex2{
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .price-inpt{
+                width: 100%;
+            }
+
+            .btn-login {
+                padding: 10px 10px;
+                font-size: 1.0rem;
+                transition: background-color 0.3s ease;
+                margin-top: 10px;
+            }
+        }
+        
+        @media (max-width: 650px) {
+            .h2{
+                font-size: 22px;
+            }
+            
+            .img{
+                width: 100%;
+            }
+        }
+    </style>
+
+{% endblock content %}

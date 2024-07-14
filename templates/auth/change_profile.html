@@ -1,0 +1,141 @@
+{% extends 'workspace/base.html' %}
+{% load static %}
+
+{% block title %}| Профиль{% endblock title %}
+{% block content %}
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="card" style="width: 450px">
+            <div class="card-body rounded-lg">
+                <div class="flex items-center justify-center mb-5">
+                    <h2 class="h2 text-3xl font-semibold mb-6">Профиль</h2>
+                </div>
+                <form action="{% url 'change_profile' %}" id="change-profile_form" method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="mt-4 required">
+                        {{ form.first_name.errors }}
+                        <label for="id_first_name" class="block font-medium text-gray-700">Имя</label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="mt-4">
+                        {{ form.last_name.errors }}
+                        <label for="id_last_name" class="block font-medium text-gray-700">Фамилия</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <div class="mt-4">
+                        {{ form.username.errors }}
+                        <label for="id_username" class="block font-medium text-gray-700">Имя пользователя</label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="mt-4">
+                        {{ form.email.errors }}
+                        <label for="id_email" class="block font-medium text-gray-700">Почта</label>
+                        {{ form.email }}
+                    </div>
+                    <button type="submit" class="btn-login rounded-lg w-full">Сохранить</button>
+                    <div class="text-center mt-4">
+                        <a class="text-blue-500 hover:text-blue-600" href="{% url 'change_password' %}">Изменение
+                            пароля</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <style>
+
+        #change-profile_form ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: red;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url("/media/профиль.jpeg");
+            background-size: cover;
+            max-width: 2000px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        label {
+            font-size: 18px;
+            margin-left: 6px;
+        }
+
+        input:hover {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .btn-login {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .btn-login:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 700px) {
+
+            .h2 {
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+
+            .card {
+                max-width: 350px;
+                width: 100%;
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+
+            .card-body {
+                padding: 1.1rem;
+            }
+
+            label {
+                font-size: 16px;
+                margin-left: 4px;
+            }
+
+            .chan-pass {
+                font-size: 10px;
+            }
+
+            .btn-login {
+                padding: 8px 13px;
+                font-size: 1rem;
+            }
+
+            .
+        }
+
+    </style>
+
+{% endblock content %}

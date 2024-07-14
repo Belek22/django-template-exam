@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block title %} Подробнее {{ news.title }}{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="text-center mt-10 font-semibold text-2xl">{{ news.title }}</h1>
+        <div class="flex flex-wrap mb-6">
+            <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                <div class="img">
+                    <img src="{{ news.image.url }}" class="toggle_modal" data-modal_id="modal_image_1" alt="">
+                </div>
+                <table class="table-auto w-full">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-2">Название</th>
+                        <th class="px-4 py-2">Значение</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for attribute in news.attributes.all %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ attribute.name }}</td>
+                            <td class="border px-4 py-2">
+                                {% if attribute.link %}
+                                    <a href="{{ attribute.link }}" class="text-blue-500">{{ attribute.value }}</a>
+                                {% else %}
+                                    {{ attribute.value }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="w-full mt-20 md:w-1/2 md:pl-6">
+                <p class="text-left mb-3">Категория: {{ news.category.name }}</p>
+                <p class="text-left mb-3">Цена: {{ news.price }}</p>
+                <p class="mb-6">{{ news.content }}</p>
+                {% if news.info %}
+                    <p class="text-end mt-3">
+                        <a target="_blank" href="{{ news.info.link }}" class="text-blue-500">Link</a> |
+                        <span>{{ news.info.email }}: {{ news.info.rating }}</span>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal_container" id="modal_image_1">
+        <div class="modal_backdrop toggle_modal" data-modal_id="modal_image_1"></div>
+        <div class="modal_card">
+            <button class="btn_close toggle_modal" data-modal_id="modal_image_1"><i class="fa-solid fa-xmark"></i>
+            </button>
+            <img src="{{ news.image.url }}" alt="">
+        </div>
+    </div>
+
+    <script>
+        const toggleModals = document.querySelectorAll('.toggle_modal');
+
+        const toggleModalWin = (modalId) => {
+            const modalWin = document.querySelector(`#${modalId}`);
+            modalWin.classList.toggle('active');
+        }
+
+        for (const toggleModal of toggleModals) {
+            toggleModal.addEventListener('click', () => {
+                const modalId = toggleModal.dataset.modal_id;
+                toggleModalWin(modalId);
+            });
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            max-width: 1280px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        .img {
+            max-width: 500px;
+        }
+
+        .img img {
+            width: 100%;
+        }
+
+        .btn_close {
+            position: absolute;
+            right: 8%;
+            top: 6%;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .modal_container .modal_backdrop {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            backdrop-filter: blur(4px);
+            background-color: rgba(0, 0, 0, .5);
+            opacity: 0;
+            z-index: -1;
+            transition: .25s linear;
+        }
+
+        .modal_container .modal_card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 100;
+            height: fit-content;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 25px;
+            padding: 15px;
+            background: white;
+            transition: .25s linear;
+        }
+
+        .modal_container.active .modal_backdrop {
+            z-index: 99;
+            opacity: 1;
+        }
+
+        .modal_container.active .modal_card {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        @media (max-width: 768px) {
+            .img{
+                margin: 0 auto;
+            }
+        }
+    </style>
+
+
+{% endblock content %}

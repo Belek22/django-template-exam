@@ -1,0 +1,41 @@
+{% if news.has_previous or news.has_next %}
+<nav class="bg-pag">
+    <ul class="flex justify-center">
+        {% if news.has_previous %}
+            <li class="mr-2">
+                <a class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l" href="?page={{ news.previous_page_number }}">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for i in news.paginator.page_range %}
+            {% if news.number == i %}
+                <li class="mr-2">
+                    <a class="bg-blue-500 text-white font-bold py-2 px-4 rounded-l" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% else %}
+                <li class="mr-2">
+                    <a class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if news.has_next %}
+            <li>
+                <a class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r" href="?page={{ news.next_page_number }}">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<style>
+    .bg-pag{
+        background-color: #F9F9F9;
+        padding-bottom: 50px;
+        padding-top: 30px;
+    }
+</style>
